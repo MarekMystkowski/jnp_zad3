@@ -10,6 +10,7 @@ class VeryLongInt{
 		std::vector<uint32_t> data;
 		int date;
 		void correct_invariants();
+    void multiplyByDigitAndShift(VeryLongInt &, uint32_t, uint32_t) const;
 	public:
 		VeryLongInt(const VeryLongInt &);
 		VeryLongInt(int arg = 0);
