@@ -13,17 +13,22 @@ void test_1(){
 	VeryLongInt O;
 	assert( O == 0 );
 	assert( a.isValid() );
-	
+	/*
+	 NA FORUM JEST INFORMACJA O TYM PRZYPADKU:
+	     Aktualnie przyjmuję że jest poprawne, zrzutuje binarnie na liczbę
+	     bez znaku.
 	VeryLongInt d(-1);
-	assert(not d.isValid() );
-	a = -5;
+	assert(not d.isValid() );*/
+	a -= 5;
 	assert(not a.isValid() );
 	
 	char c[3]; c[0] = '4'; c[1] = '2'; c[2] = '\0';
 	assert(VeryLongInt("42") == 42);
 	assert(VeryLongInt(c) == 42);
 	assert(VeryLongInt( string("42") ) == 42);
-	//a += "42"; //Ma się nie kompilować : OK.
+	//a += "42"; //Ma się nie kompilować :                              OK.
+	// a = string("42"); // Ma się nie kompilować:                      OK
+	//VeryLongInt q('4'); // Ma się nie kompilować:                     KOMPILUJE SIĘ !!!!!!!!!
 	
 	
 }
@@ -73,8 +78,9 @@ void test_3(){
 	assert(a);
 	a = 0;
 	assert( not a);
-	a = -3;
+	a -= 3;
 	assert( not a);
+	//a = true; // Ma się nie kompilować:                               KOMPILUJE SIĘ !!!!!!!!!
 }
 
 int main(){

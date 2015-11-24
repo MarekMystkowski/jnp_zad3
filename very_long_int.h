@@ -2,10 +2,13 @@
 #define VERY_LONG_INT_H
 #include <iostream>
 #include <string>
+#include <vector>
 
 class VeryLongInt{
 	private:
-		long long date;
+		bool isNaN;
+		std::vector<uint32_t> data;
+		int date;
 	public:
 		VeryLongInt();
 		VeryLongInt(const VeryLongInt &);

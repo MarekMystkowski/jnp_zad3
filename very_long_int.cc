@@ -9,29 +9,31 @@ VeryLongInt::VeryLongInt(){
 	*this = VeryLongInt(0);
 }
 VeryLongInt::VeryLongInt(const VeryLongInt &x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	date = x.date;
+	isNaN = x.isNaN;
+	data = x.data;
 }
 VeryLongInt::VeryLongInt(int x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	date = x;
+	isNaN = false;
+	data.clear();
+	data.push_back(x);
 }
 VeryLongInt::VeryLongInt(long long int x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	date = (int) x;
+	uint32_t tmp1;
+	tmp1 = (uint32_t) (x % (1LL << 32));
+	*this = VeryLongInt((int)tmp1);
+	tmp1 = (uint32_t) (x >> 32);
+	if(tmp1 > 0) data.push_back(tmp1);
 }
 VeryLongInt::VeryLongInt(const string &x){
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	date = 42;
+	*this = VeryLongInt(42);
 }
 VeryLongInt::VeryLongInt(const char *x){
 	*this = VeryLongInt(string(x));
 }
 bool VeryLongInt::isValid()const{
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	return (this->date >= 0);
+	return not isNaN;
 }
-
 VeryLongInt::operator bool() const{
 	if(not isValid()) return false;
 	if(*this == 0)return false;
@@ -39,32 +41,50 @@ VeryLongInt::operator bool() const{
 }
 unsigned int VeryLongInt::numberOfBinaryDigits(){
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	if(this-> date == 0) return 0;
 	return 1;
 }
 VeryLongInt & VeryLongInt::operator=(const VeryLongInt &x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	this->date = x.date;
+	this->isNaN = x.isNaN;
+	this->data = x.data;
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator+=(const VeryLongInt &x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	this->date += x.date;
+	if(this->isNaN || x.isNaN)
+		this->isNaN = true;
+	else {
+		// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		this->data[0] += x.data[0];
+	}
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator-=(const VeryLongInt &x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	this->date -= x.date;
+	if(this->isNaN || x.isNaN)
+		this->isNaN = true;
+	else {
+		// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		if(this->data[0] < x.data[0])
+			this->isNaN = true;
+		else
+			this->data[0] -= x.data[0];
+	}
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator*=(const VeryLongInt &x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	this->date *= x.date;
+	if(this->isNaN || x.isNaN)
+		this->isNaN = true;
+	else {
+		// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		this->data[0] *= x.data[0];
+	}
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	this->date /= x.date;
+	if(this->isNaN || x.isNaN || x == 0)
+		this->isNaN = true;
+	else {
+		// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		this->data[0] /= x.data[0];
+	}
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator%=(const VeryLongInt &x){
@@ -73,13 +93,21 @@ VeryLongInt & VeryLongInt::operator%=(const VeryLongInt &x){
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator<<=(unsigned int x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	this->date <<= x;
+	if(this->isNaN)
+		this->isNaN = true;
+	else {
+		// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		this->data[0] <<= x;
+	}
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator>>=(unsigned int x){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	this->date >>= x;
+	if(this->isNaN)
+		this->isNaN = true;
+	else {
+		// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		this->data[0] >>= x;
+	}
 	return *this;
 }
 
