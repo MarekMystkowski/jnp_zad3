@@ -22,6 +22,9 @@ void test_1(){
 	char c[3]; c[0] = '4'; c[1] = '2'; c[2] = '\0';
 	assert(VeryLongInt("42") == 42);
 	assert(VeryLongInt(c) == 42);
+	assert(VeryLongInt( string("42") ) == 42);
+	//a += "42"; //Ma się nie kompilować : OK.
+	
 	
 }
 
@@ -33,13 +36,49 @@ void test_2(){
 	assert( a * b == 52);
 	assert( a / b == 3);
 	assert( a % b == 1);
-/*
-	assert( a << 1 = 26);
-	assert( a >> 1 = 6); */
+
+	assert( a << 1 == 26);
+	assert( a >> 1 == 6); 
+	a += b;
+	assert(a == 17);
+	assert(b == 4);
+	a -= b;
+	assert(a == 13);
+	assert(b == 4);
+	a *= b;
+	assert(a == 52);
+	assert(b == 4);
+	a /= b;
+	assert(a == 13);
+	assert(b == 4);
+	a /= b;
+	assert(a == 3);
+	a %= 2;
+	assert(a == 1);
+	a >>= 1;
+	assert(a == 0);
+	a >>= 1;
+	assert(a == 0);
+	a <<= 1;
+	assert(a == 0);
+	a += 3;
+	a <<= 2;
+	assert(a == 12);
+	
 }
 
+void test_3(){
+	VeryLongInt a;
+	a = 4;
+	assert(a);
+	a = 0;
+	assert( not a);
+	a = -3;
+	assert( not a);
+}
 
 int main(){
 	test_1();
 	test_2();
+	test_3();
 }

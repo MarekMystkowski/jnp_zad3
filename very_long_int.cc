@@ -31,12 +31,12 @@ bool VeryLongInt::isValid()const{
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	return (this->date >= 0);
 }
-/*
+
 VeryLongInt::operator bool() const{
-	if(not isValid()) return false
+	if(not isValid()) return false;
 	if(*this == 0)return false;
 	return true;
-}*/
+}
 unsigned int VeryLongInt::numberOfBinaryDigits(){
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	if(this-> date == 0) return 0;

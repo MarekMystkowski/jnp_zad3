@@ -13,7 +13,7 @@ class VeryLongInt{
 		VeryLongInt(long long int);
 		explicit VeryLongInt(const std::string &);
 		explicit VeryLongInt(const char *);
-		//explicit operator bool() const;
+		explicit operator bool() const;
 		
 		
 		unsigned int numberOfBinaryDigits();
