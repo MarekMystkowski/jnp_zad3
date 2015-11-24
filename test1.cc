@@ -83,8 +83,14 @@ void test_3(){
 	//a = true; // Ma się nie kompilować:                               KOMPILUJE SIĘ !!!!!!!!!
 }
 
+void test_4(){
+	long long int x = 1000000000000000L;
+	VeryLongInt a(x);
+	
+}
 int main(){
 	test_1();
 	test_2();
 	test_3();
+	test_4();
 }

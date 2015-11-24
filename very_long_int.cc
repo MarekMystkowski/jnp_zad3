@@ -1,6 +1,13 @@
 /* Do zmiany jest : // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
  * pozostałę funkcje/metody powinny pozostać bez zmian.
  */
+/* Założenia:
+ * 1) przyjmujuemy też liczby ujemne do konstruktorów, wtedy żutujemy bitowo
+ *    na liczby nieujemne.
+ * 2) pilnujemy niezmienika że po każdej operacji:
+ * 		-wektor data ma conajmniej jeden element.
+ * 		-wektor data nie ma na końcu liczby == 0 (chyba że to jedyna wartość).
+ */
 
 
 #include "very_long_int.h"
@@ -34,14 +41,25 @@ VeryLongInt::VeryLongInt(const char *x){
 bool VeryLongInt::isValid()const{
 	return not isNaN;
 }
+void VeryLongInt::correct_invariants(){
+	if(data.size() == 0) data.push_back(0);
+	while(data[data.size() - 1] == 0 && data.size() > 1)
+		data.pop_back();
+}
 VeryLongInt::operator bool() const{
 	if(not isValid()) return false;
 	if(*this == 0)return false;
 	return true;
 }
-unsigned int VeryLongInt::numberOfBinaryDigits(){
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	return 1;
+size_t VeryLongInt::numberOfBinaryDigits(){
+	if(not isValid())return 0;
+	size_t result = (data.size() - 1) * 32;
+	uint32_t tmp = data[data.size() - 1];
+	while(tmp > 0){
+		tmp >>= 1;
+		result++;
+	}
+	return result;
 }
 VeryLongInt & VeryLongInt::operator=(const VeryLongInt &x){
 	this->isNaN = x.isNaN;
@@ -49,23 +67,43 @@ VeryLongInt & VeryLongInt::operator=(const VeryLongInt &x){
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator+=(const VeryLongInt &x){
-	if(this->isNaN || x.isNaN)
-		this->isNaN = true;
+	if(isNaN || x.isNaN)
+		isNaN = true;
 	else {
-		// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-		this->data[0] += x.data[0];
+		uint64_t tmp = 0L;
+		while(data.size() < x.data.size())
+			data.push_back(0);
+		
+		for(size_t i = 0; i < x.data.size(); i++){
+			tmp += x.data[i] +  data[i];
+			data[i] = (uint32_t) (tmp % (1L << 32));
+			tmp /= 1L << 32;
+		}
+		data.push_back((uint32_t) (tmp % (1L << 32)));
+		correct_invariants();
 	}
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator-=(const VeryLongInt &x){
-	if(this->isNaN || x.isNaN)
-		this->isNaN = true;
+	if(isNaN || x.isNaN || data.size() < x.data.size())
+		isNaN = true;
 	else {
-		// XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-		if(this->data[0] < x.data[0])
-			this->isNaN = true;
-		else
-			this->data[0] -= x.data[0];
+		uint64_t tmp = 1L << 32;
+		for(size_t i = 0; i < x.data.size(); i++){
+			tmp = tmp - x.data[i] +  data[i];
+			data[i] = (uint32_t) (tmp % (1L << 32));
+			if(tmp < (1L << 32){
+				//niedobór 
+				
+			}else {
+				tmp = 1L << 32;
+			}
+		}
+		if(tmp < (1L << 32){
+				//niedobór 
+				
+			}
+		correct_invariants();
 	}
 	return *this;
 }

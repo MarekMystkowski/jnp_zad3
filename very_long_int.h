@@ -9,6 +9,7 @@ class VeryLongInt{
 		bool isNaN;
 		std::vector<uint32_t> data;
 		int date;
+		void correct_invariants();
 	public:
 		VeryLongInt();
 		VeryLongInt(const VeryLongInt &);
@@ -19,7 +20,7 @@ class VeryLongInt{
 		explicit operator bool() const;
 		
 		
-		unsigned int numberOfBinaryDigits();
+		size_t numberOfBinaryDigits();
 		bool isValid()const;
 		
 		VeryLongInt &operator=(const VeryLongInt &);
