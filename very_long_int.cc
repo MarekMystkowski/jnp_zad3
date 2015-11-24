@@ -12,9 +12,7 @@
 
 #include "very_long_int.h"
 using namespace std;
-VeryLongInt::VeryLongInt(){
-	*this = VeryLongInt(0);
-}
+
 VeryLongInt::VeryLongInt(const VeryLongInt &x){
 	isNaN = x.isNaN;
 	data = x.data;

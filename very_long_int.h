@@ -11,9 +11,8 @@ class VeryLongInt{
 		int date;
 		void correct_invariants();
 	public:
-		VeryLongInt();
 		VeryLongInt(const VeryLongInt &);
-		VeryLongInt(int);
+		VeryLongInt(int arg = 0);
 		VeryLongInt(long long int);
 		explicit VeryLongInt(const std::string &);
 		explicit VeryLongInt(const char *);
