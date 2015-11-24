@@ -1,17 +1,22 @@
+#ifndef VERY_LONG_INT_H
+#define VERY_LONG_INT_H
 #include <iostream>
+#include <string>
 
 class VeryLongInt{
 	private:
 		long long date;
 	public:
 		VeryLongInt();
-		VeryLongInt(VeryLongInt const &);
+		VeryLongInt(const VeryLongInt &);
 		VeryLongInt(int);
 		VeryLongInt(long long int);
-		///*explicit */operator bool() const;
+		explicit VeryLongInt(const std::string &);
+		explicit VeryLongInt(const char *);
+		//explicit operator bool() const;
 		
 		
-		//unsigned int numberOfBinaryDigits();
+		unsigned int numberOfBinaryDigits();
 		bool isValid()const;
 		
 		VeryLongInt &operator=(const VeryLongInt &);
@@ -43,3 +48,4 @@ bool operator>=(const VeryLongInt &, const VeryLongInt &);
 //VeryLongInt const &Zero();
 //VeryLongInt const &NaN();
 
+#endif
