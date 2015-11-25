@@ -13,14 +13,14 @@ class VeryLongInt{
     void multiplyByDigitAndShift(VeryLongInt &, uint32_t, uint32_t) const;
 	public:
 		VeryLongInt(const VeryLongInt &);
-		VeryLongInt(int arg = 0);
+		VeryLongInt(int32_t arg = 0);
 		VeryLongInt(long long int);
 		explicit VeryLongInt(const std::string &);
 		explicit VeryLongInt(const char *);
 		explicit operator bool() const;
 		
 		
-		size_t numberOfBinaryDigits();
+		size_t numberOfBinaryDigits()const;
 		bool isValid()const;
 		
 		VeryLongInt &operator=(const VeryLongInt &);

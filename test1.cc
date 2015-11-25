@@ -378,7 +378,7 @@ void test_10013(){
 		x *= 2;
 	assert(x.numberOfBinaryDigits() == N);
 }
-
+*/
 void test_10014(){
 	VeryLongInt x("1234567890123456789012345678901234567890");
 	VeryLongInt z = x;
@@ -387,7 +387,7 @@ void test_10014(){
 	x -= y;
 	assert(x == z);
 }
-
+/*
 void test_10015(){
 	VeryLongInt x(string("12345678"));
 	VeryLongInt y(12345678U);
@@ -400,14 +400,14 @@ void test_10016(){
 	assert(x == y);
 	cout << y << endl;
 }
-
+*/
 void test_10017(){    
 	VeryLongInt x("1234567890123456789012345678901234567890");
 	VeryLongInt y("1204567890123456789012345678901234567890");
 	VeryLongInt z(  "30000000000000000000000000000000000000");
 	assert(z == x - y);
 }
-
+/*
 void test_10018(){
 	VeryLongInt x("10000000000");
 	VeryLongInt y("100000000000");
@@ -426,18 +426,23 @@ void test_10019(){
 	
 	assert(x == 1);
 }
-
+*/
 void test_10020(){
 	assert(Zero().numberOfBinaryDigits() == 1);
 	assert(NaN().numberOfBinaryDigits() == 0);
 }
 
-*/
+void test_wypisywania(){
+	VeryLongInt a = 123456789;
+	cout << a << " = 123456789" << endl;
+	VeryLongInt x((long long int)12345678901234L); // brak konstruktora dla long int.
+	//cout << x << " = 12345678901234" << endl;
+}
+
 
 int main(){
 	
-	VeryLongInt a = 123456789;
-	cout << a << " = 123456789" << endl;
+	test_wypisywania();
 	test_1();
 	test_2();
 	test_3();
@@ -486,15 +491,15 @@ int main(){
 	test_10009();
 	test_10010();
 	test_10011();*/
-	test_10012();/*
-	test_10013();
+	test_10012();
+	//test_10013();
 	test_10014();
-	test_10015();
-	test_10016();
-	test_10017();
-	test_10018();
-	test_10019();
+	//test_10015();
+	//test_10016();
+	//test_10017(); // Potrzebne poprawne *
+	//test_10018();
+	//test_10019();
 	test_10020();
-	*/
+	
 	
 }

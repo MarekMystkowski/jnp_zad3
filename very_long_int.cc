@@ -20,7 +20,7 @@ static const uint64_t BASE = 1L << 32;
 VeryLongInt::VeryLongInt(const VeryLongInt &x) : isNaN(x.isNaN), data(x.data) {
 }
 
-VeryLongInt::VeryLongInt(int x): isNaN(false) {
+VeryLongInt::VeryLongInt(int32_t x): isNaN(false) {
 	data.clear();
 	data.push_back(x);
 }
@@ -57,8 +57,9 @@ VeryLongInt::operator bool() const{
 	if(*this == 0)return false;
 	return true;
 }
-size_t VeryLongInt::numberOfBinaryDigits(){
+size_t VeryLongInt::numberOfBinaryDigits()const{
 	if(not isValid())return 0;
+	if(*this == 0)return 1;
 	size_t result = (data.size() - 1) * 32;
 	uint32_t tmp = data[data.size() - 1];
 	while(tmp > 0){
