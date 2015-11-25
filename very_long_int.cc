@@ -12,6 +12,7 @@
 
 #include "very_long_int.h"
 #include <algorithm>
+#include <stack>
 using namespace std;
 
 static const uint64_t BASE = 1L << 32;
@@ -33,7 +34,11 @@ VeryLongInt::VeryLongInt(long long int x){
 }
 
 VeryLongInt::VeryLongInt(const string &x){
-	*this = VeryLongInt(42);
+	VeryLongInt currentResult;
+	for(char c : x){
+		currentResult = (currentResult * 10) + (int)(c - '0');
+	}
+	*this = currentResult;
 }
 
 VeryLongInt::VeryLongInt(const char *x){
@@ -63,8 +68,8 @@ size_t VeryLongInt::numberOfBinaryDigits(){
 	return result;
 }
 VeryLongInt & VeryLongInt::operator=(const VeryLongInt &x){
-	this->isNaN = x.isNaN;
-	this->data = x.data;
+	isNaN = x.isNaN;
+	data = x.data;
 	return *this;
 }
 VeryLongInt & VeryLongInt::operator+=(const VeryLongInt &x){
@@ -74,13 +79,18 @@ VeryLongInt & VeryLongInt::operator+=(const VeryLongInt &x){
 		uint64_t tmp = 0L;
 		while(data.size() < x.data.size())
 			data.push_back(0);
+		data.push_back(0);
 		
 		for(size_t i = 0; i < x.data.size(); i++){
-			tmp += x.data[i] +  data[i];
-			data[i] = (uint32_t) (tmp % (1L << 32));
-			tmp /= 1L << 32;
+			tmp += (uint64_t) x.data[i] + (uint64_t) data[i];
+			data[i] = (uint32_t) (tmp % BASE);
+			tmp /= BASE;
 		}
-		data.push_back((uint32_t) (tmp % (1L << 32)));
+		for(size_t i = x.data.size(); tmp > 0L; i++){
+			tmp += data[i];
+			data[i] = (uint32_t) (tmp % BASE);
+			tmp /= BASE;
+		}
 		correct_invariants();
 	}
 	return *this;
@@ -90,20 +100,22 @@ VeryLongInt & VeryLongInt::operator-=(const VeryLongInt &x){
   if(isNaN || x.isNaN || data.size() < x.data.size())
     isNaN = true;
   else {
-    uint64_t tmp = 1L << 32;
+    uint64_t tmp = BASE;
     for(size_t i = 0; i < x.data.size(); i++){
-      tmp = tmp - x.data[i] +  data[i];
-      data[i] = (uint32_t) (tmp % (1L << 32));
-      if(tmp < (1L << 32)){
-        //niedobór 
-
+      tmp +=  (uint64_t) data[i] - (uint64_t) x.data[i];
+      data[i] = (uint32_t) (tmp % BASE);
+      if(tmp < BASE){
+        tmp = BASE - 1L;
       } else {
-        tmp = 1L << 32;
+        tmp = BASE;
       }
     }
-    if(tmp < (1L << 32)){
-      //niedobór 
-
+    if(tmp < BASE){
+      if(data.size() > x.data.size()){
+		data[x.data.size()] -= 1;
+	  } else {
+	    isNaN = true;
+	  }
     }
     correct_invariants();
   }
@@ -117,9 +129,9 @@ void VeryLongInt::multiplyByDigitAndShift(
   result.data = vector <uint32_t>();
   uint64_t currentTempResult;
   uint32_t currentRest;
-  uint32_t sizeOfThisData = this->data.size();
+  uint32_t sizeOfThisData = data.size();
   for (uint32_t i = 0; i < sizeOfThisData; ++i) {
-    currentTempResult = digitArg * this->data[i] + currentRest;
+    currentTempResult = (uint64_t)digitArg * (uint64_t)data[i] + (uint64_t)currentRest;
     result.data.push_back(currentTempResult % BASE);
     currentRest = currentTempResult / BASE;
   }
@@ -131,31 +143,36 @@ void VeryLongInt::multiplyByDigitAndShift(
 }
 
 VeryLongInt & VeryLongInt::operator*= (const VeryLongInt &x) {
-  if(this->isNaN || x.isNaN)
-    this->isNaN = true;
+  if(isNaN || x.isNaN)
+    isNaN = true;
   else {
     VeryLongInt currentResult;
-    VeryLongInt currentTemp;
-    for (uint32_t i = 0; i < this->data.size(); ++i) {
+    VeryLongInt currentTemp ;
+    for (size_t i = 0; i < data.size(); ++i) {
       vector <uint32_t> tempVectorForDigits;
       x.multiplyByDigitAndShift(
           currentTemp,
-          this->data[i],
+          data[i],
           i);
-      currentTemp.data = tempVectorForDigits;
+      // Chyba bez tej linijki  . 
+      //currentTemp.data = tempVectorForDigits;  
       currentResult += currentTemp;
     }
+    
+    *this = currentResult;
   }
-  // TODO Jak tutaj przepisać currentResult na this?
-      return *this;
+  // Zmieniam kolejność wyniku:
+  reverse(data.begin(), data.end());
+  correct_invariants();
+  return *this;
 }
 
 VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
-if(this->isNaN || x.isNaN || x == 0)
-  this->isNaN = true;
+if(isNaN || x.isNaN || x == 0)
+  isNaN = true;
 else {
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  this->data[0] /= x.data[0];
+  data[0] /= x.data[0];
 }
 return *this;
 }
@@ -165,20 +182,16 @@ VeryLongInt & VeryLongInt::operator%=(const VeryLongInt &x){
   return *this;
 }
 VeryLongInt & VeryLongInt::operator<<=(unsigned int x){
-  if(this->isNaN)
-    this->isNaN = true;
-  else {
+  if(not isNaN){
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
     this->data[0] <<= x;
   }
   return *this;
 }
 VeryLongInt & VeryLongInt::operator>>=(unsigned int x){
-  if(this->isNaN)
-    this->isNaN = true;
-  else {
+  if(not isNaN){
     // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    this->data[0] >>= x;
+    data[0] >>= x;
   }
   return *this;
 }
@@ -249,4 +262,31 @@ bool operator>(const VeryLongInt &a, const VeryLongInt &b){
 bool operator>=(const VeryLongInt &a, const VeryLongInt &b){
   if(not (a.isValid() && b.isValid()) ) return false;
   return not (a < b);
+}
+ostream & operator<<(ostream & os, const VeryLongInt & x){
+	if(not x.isValid()) os << "NaN";
+	else if(x <= 9) os << x.data[0];
+	else {
+		VeryLongInt temp = x;
+		stack<int> sta;
+		while(temp > 0){
+			sta.push((temp % 10).data[0]);
+			temp /= 10;
+		}
+		while(not sta.empty()){
+			os << sta.top();
+			sta.pop();
+		}
+	}
+	return os;
+}
+
+VeryLongInt const &Zero(){
+	const static VeryLongInt global_zero = VeryLongInt();
+	return global_zero;
+}
+
+VeryLongInt const &NaN(){
+	const static VeryLongInt global_NaN = VeryLongInt(0) - VeryLongInt(1);
+	return global_NaN;
 }

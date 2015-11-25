@@ -31,6 +31,7 @@ class VeryLongInt{
 		VeryLongInt &operator%=(const VeryLongInt &);
 		VeryLongInt &operator<<=(unsigned int);
 		VeryLongInt &operator>>=(unsigned int);
+		friend std::ostream & operator<<(std::ostream &, const VeryLongInt &);
 		
 };
 
@@ -49,7 +50,7 @@ bool operator<=(const VeryLongInt &, const VeryLongInt &);
 bool operator>(const VeryLongInt &, const VeryLongInt &);
 bool operator>=(const VeryLongInt &, const VeryLongInt &);
 
-//VeryLongInt const &Zero();
-//VeryLongInt const &NaN();
+VeryLongInt const &Zero();
+VeryLongInt const &NaN();
 
 #endif
