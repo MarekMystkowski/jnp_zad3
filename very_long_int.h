@@ -14,9 +14,28 @@ class VeryLongInt{
 	public:
 		VeryLongInt(const VeryLongInt &);
 		VeryLongInt(int32_t arg = 0);
-		VeryLongInt(long long int);
+		VeryLongInt(int64_t);
+		VeryLongInt(unsigned x){
+			*this = VeryLongInt((int32_t) x);
+			}
+		VeryLongInt(unsigned long x){
+			*this = VeryLongInt((int64_t) x);
+			}
+		VeryLongInt(unsigned long long x){
+			*this = VeryLongInt((int64_t) x);
+			}
+		VeryLongInt(long long x){
+			*this = VeryLongInt((int64_t) x);
+			}
+		VeryLongInt(char) = delete;
+		VeryLongInt(char16_t) = delete;
+		VeryLongInt(char32_t) = delete;
+		VeryLongInt(wchar_t) = delete;
+		VeryLongInt(bool) = delete;
 		explicit VeryLongInt(const std::string &);
 		explicit VeryLongInt(const char *);
+		
+	//	VeryLongInt(long long int);
 		explicit operator bool() const;
 		
 		

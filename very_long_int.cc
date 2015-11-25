@@ -25,10 +25,11 @@ VeryLongInt::VeryLongInt(int32_t x): isNaN(false) {
 	data.push_back(x);
 }
 
-VeryLongInt::VeryLongInt(long long int x){
+VeryLongInt::VeryLongInt(int64_t x): isNaN(false){
+	data.clear();
 	uint32_t tempNumber;
 	tempNumber = (uint32_t) (x % (1LL << 32));
-	*this = VeryLongInt((int)tempNumber);
+	data.push_back(tempNumber);
 	tempNumber = (uint32_t) (x >> 32);
 	if(tempNumber > 0) data.push_back(tempNumber);
 }

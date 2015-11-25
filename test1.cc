@@ -1,6 +1,39 @@
 #include "very_long_int.h"
 #include <assert.h>
 using namespace std;
+void test_0(){
+	short a = 1;
+	int b = 1;
+	long c = 1;
+	long long d = 1L;
+	unsigned short e = 1;
+	unsigned int f = 1;
+	unsigned long g = 1;
+	unsigned long long h = 1L;
+	assert(VeryLongInt(a) == 1);
+	assert(VeryLongInt(b) == 1);
+	assert(VeryLongInt(c) == 1);
+	assert(VeryLongInt(d) == 1);
+	assert(VeryLongInt(e) == 1);
+	assert(VeryLongInt(f) == 1);
+	assert(VeryLongInt(g) == 1);
+	assert(VeryLongInt(h) == 1);
+	unsigned char i = 1;
+	signed char j = 1;
+	assert(VeryLongInt(i) == 1);
+	assert(VeryLongInt(j) == 1);
+	size_t k = 1;
+	assert(VeryLongInt(k) == 1);
+	// Nie kompilować:
+	//assert(VeryLongInt(true));      //                                OK
+	//assert(VeryLongInt('0'));       //                                OK
+//	char16_t l = 1;
+//	char32_t m = 1;
+//	wchar_t n = 1;
+	//assert(VeryLongInt(l) == 1); //                                   OK
+	//assert(VeryLongInt(m) == 1); //                                   OK
+	//assert(VeryLongInt(n) == 1); //                                   OK
+}
 void test_1(){
 	VeryLongInt a(4);
 	assert( a.isValid() );
@@ -13,12 +46,6 @@ void test_1(){
 	VeryLongInt O;
 	assert( O == 0 );
 	assert( a.isValid() );
-	/*
-	 NA FORUM JEST INFORMACJA O TYM PRZYPADKU:
-	     Aktualnie przyjmuję że jest poprawne, zrzutuje binarnie na liczbę
-	     bez znaku.
-	VeryLongInt d(-1);
-	assert(not d.isValid() );*/
 	a -= 5;
 	assert(not a.isValid() );
 	
@@ -28,7 +55,7 @@ void test_1(){
 	assert(VeryLongInt( string("42") ) == 42);
 	//a += "42"; //Ma się nie kompilować :                              OK.
 	// a = string("42"); // Ma się nie kompilować:                      OK
-	//VeryLongInt q('4'); // Ma się nie kompilować:                     KOMPILUJE SIĘ !!!!!!!!!
+	//VeryLongInt q('4'); // Ma się nie kompilować:                     OK
 	
 	
 }
@@ -370,7 +397,7 @@ void test_10012(){
 	VeryLongInt x = Zero() ;
 	assert(x == 0);
 }
-/*
+
 void test_10013(){
 	const int N = 100;
 	VeryLongInt x = 1;
@@ -378,7 +405,7 @@ void test_10013(){
 		x *= 2;
 	assert(x.numberOfBinaryDigits() == N);
 }
-*/
+
 void test_10014(){
 	VeryLongInt x("1234567890123456789012345678901234567890");
 	VeryLongInt z = x;
@@ -387,7 +414,7 @@ void test_10014(){
 	x -= y;
 	assert(x == z);
 }
-/*
+
 void test_10015(){
 	VeryLongInt x(string("12345678"));
 	VeryLongInt y(12345678U);
@@ -398,16 +425,15 @@ void test_10016(){
 	VeryLongInt x("12345678901234567890");
 	VeryLongInt y(12345678901234567890UL);
 	assert(x == y);
-	cout << y << endl;
 }
-*/
+
 void test_10017(){    
 	VeryLongInt x("1234567890123456789012345678901234567890");
 	VeryLongInt y("1204567890123456789012345678901234567890");
 	VeryLongInt z(  "30000000000000000000000000000000000000");
 	assert(z == x - y);
 }
-/*
+
 void test_10018(){
 	VeryLongInt x("10000000000");
 	VeryLongInt y("100000000000");
@@ -426,7 +452,7 @@ void test_10019(){
 	
 	assert(x == 1);
 }
-*/
+
 void test_10020(){
 	assert(Zero().numberOfBinaryDigits() == 1);
 	assert(NaN().numberOfBinaryDigits() == 0);
@@ -435,7 +461,7 @@ void test_10020(){
 void test_wypisywania(){
 	VeryLongInt a = 123456789;
 	cout << a << " = 123456789" << endl;
-	VeryLongInt x((long long int)12345678901234L); // brak konstruktora dla long int.
+	VeryLongInt x(12345678901234L); 
 	//cout << x << " = 12345678901234" << endl;
 }
 
@@ -443,6 +469,7 @@ void test_wypisywania(){
 int main(){
 	
 	test_wypisywania();
+	test_0();
 	test_1();
 	test_2();
 	test_3();
@@ -494,11 +521,11 @@ int main(){
 	test_10012();
 	//test_10013();
 	test_10014();
-	//test_10015();
-	//test_10016();
+	test_10015();
+	test_10016();
 	//test_10017(); // Potrzebne poprawne *
-	//test_10018();
-	//test_10019();
+	//test_10018(); // Potrzebne poprawne *
+	//test_10019(); // Potrzebne poprawne *
 	test_10020();
 	
 	
