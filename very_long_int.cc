@@ -163,14 +163,34 @@ VeryLongInt & VeryLongInt::operator*= (const VeryLongInt &x) {
 }
 
 VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
-if(isNaN || x.isNaN || x == 0)
-  isNaN = true;
-else {
-  // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  data[0] /= x.data[0];
+  if(isNaN || x.isNaN || x == 0)
+    isNaN = true;
+  else {
+    uint32_t lengthOfX = x.data.size();
+    uint32_t lengthOfThis = data.size();
+    VeryLongInt result;
+    if (lengthOfThis < lengthOfX) 
+      *this = result;
+    else {
+      VeryLongInt helperNumberDividing(x);
+      for (uint32_t iterator = 0; iterator < lengthOfThis - lengthOfX; ++iterator)
+        helperNumberDividing.data.push_back(0);
+      uint32_t nrOfZerosAddedToHelper = lengthOfThis - lengthOfX;
+      while (nrOfZerosAddedToHelper >= 0) {
+        while (*this > helperNumberDividing) {
+          *this -= helperNumberDividing;
+          result += 1;
+        }
+        --nrOfZerosAddedToHelper;
+        if (result > 0) 
+          result.data.push_back(0);
+      }
+      *this = result;
+    }
+  }
+  return *this;
 }
-return *this;
-}
+
 VeryLongInt & VeryLongInt::operator%=(const VeryLongInt &x){
   VeryLongInt k = *this / x;
   *this -= k * x;
