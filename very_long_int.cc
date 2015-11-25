@@ -132,6 +132,8 @@ void VeryLongInt::multiplyByDigitAndShift(
   uint64_t currentTempResult;
   uint32_t currentRest;
   uint32_t sizeOfThisData = data.size();
+  for (uint32_t i = 0; i < shift; ++i)
+    result.data.push_back(0);
   for (uint32_t i = 0; i < sizeOfThisData; ++i) {
     currentTempResult = (uint64_t)digitArg * (uint64_t)data[i] + (uint64_t)currentRest;
     result.data.push_back(currentTempResult % BASE);
@@ -139,9 +141,6 @@ void VeryLongInt::multiplyByDigitAndShift(
   }
   if (currentRest > 0) 
     result.data.push_back(currentRest);
-  reverse(result.data.begin(), result.data.end());
-  for (uint32_t i = 0; i < shift; ++i)
-    result.data.push_back(0);
 }
 
 VeryLongInt & VeryLongInt::operator*= (const VeryLongInt &x) {
@@ -151,20 +150,14 @@ VeryLongInt & VeryLongInt::operator*= (const VeryLongInt &x) {
     VeryLongInt currentResult;
     VeryLongInt currentTemp ;
     for (size_t i = 0; i < data.size(); ++i) {
-      vector <uint32_t> tempVectorForDigits;
       x.multiplyByDigitAndShift(
           currentTemp,
           data[i],
           i);
-      // Chyba bez tej linijki  . 
-      //currentTemp.data = tempVectorForDigits;  
       currentResult += currentTemp;
     }
-    
     *this = currentResult;
   }
-  // Zmieniam kolejność wyniku:
-  reverse(data.begin(), data.end());
   correct_invariants();
   return *this;
 }
