@@ -290,7 +290,7 @@ void test_129(){
 
 // Testy podane w treści zadania 100xy:
 
-void test_1000(){
+void test_10000(){
 	VeryLongInt x = 1;
 	x /= 0;
 	assert(!x.isValid());
@@ -473,28 +473,28 @@ int main(){
 	
 	// Testy z treści zadania:
 
-	void test_10000();
-	void test_10001();
-	void test_10002();
-	void test_10003();
-	void test_10004();
-	void test_10005();
-	void test_10006();
-	void test_10007();
+	test_10000();
+	test_10001();
+	test_10002();
+	test_10003();
+	test_10004();
+	test_10005();
+	test_10006();
+	test_10007();
 	/*
-	void test_10008();
-	void test_10009();
-	void test_10010();
-	void test_10011();*/
-	void test_10012();/*
-	void test_10013();
-	void test_10014();
-	void test_10015();
-	void test_10016();
-	void test_10017();
-	void test_10018();
-	void test_10019();
-	void test_10020();
+	test_10008();
+	test_10009();
+	test_10010();
+	test_10011();*/
+	test_10012();/*
+	test_10013();
+	test_10014();
+	test_10015();
+	test_10016();
+	test_10017();
+	test_10018();
+	test_10019();
+	test_10020();
 	*/
 	
 }
