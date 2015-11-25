@@ -475,7 +475,7 @@ int main(){
 	test_3();
 	test_4();
 	test_5();
-	//test_6(); // Mnożenie dalej nie działa :(
+	test_6(); // Mnożenie dalej nie działa :(
 	
 	// Bardzo proste testy:
 	test_100();

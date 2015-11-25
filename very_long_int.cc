@@ -129,8 +129,8 @@ void VeryLongInt::multiplyByDigitAndShift(
     uint32_t digitArg,
     uint32_t shift) const {
   result.data = vector <uint32_t>();
-  uint64_t currentTempResult;
-  uint32_t currentRest;
+  uint64_t currentTempResult = 0;
+  uint32_t currentRest = 0;
   uint32_t sizeOfThisData = data.size();
   for (uint32_t i = 0; i < shift; ++i)
     result.data.push_back(0);
