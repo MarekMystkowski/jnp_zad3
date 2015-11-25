@@ -63,6 +63,29 @@ void test_1(){
 void test_2(){
 	VeryLongInt a(13);
 	VeryLongInt b(4);
+
+  VeryLongInt c(1);
+  VeryLongInt d(4);
+
+  assert( c < d );
+  
+  cout << ((a - b) - b) - b << "\n";
+  assert ( ((a - b) - b) - b == 1 );
+  assert ( ((a - b) - b) - b > 0 );
+  assert ( ((a - b) - b) - b < b );
+  
+  VeryLongInt e(13);
+  VeryLongInt f(4);
+
+  e -= f;
+  assert( e == 9 );
+  e -= f;
+  assert( e == 5 );
+  e -= f;
+  assert( e == 1 );
+
+  assert( e < f );
+
 	assert( a + b == 17);
 	assert( a - b == 9);
 	assert( a * b == 52);
@@ -468,7 +491,7 @@ void test_wypisywania(){
 
 int main(){
 	
-	test_wypisywania();
+	//test_wypisywania();
 	test_0();
 	test_1();
 	test_2();
@@ -504,7 +527,6 @@ int main(){
 	test_129();
 	
 	// Testy z treści zadania:
-
 	test_10000();
 	test_10001();
 	test_10002();
@@ -523,10 +545,13 @@ int main(){
 	test_10014();
 	test_10015();
 	test_10016();
-	//test_10017(); // Potrzebne poprawne *
-	//test_10018(); // Potrzebne poprawne *
-	//test_10019(); // Potrzebne poprawne *
+	test_10017(); // Potrzebne poprawne *
+	test_10018(); // Potrzebne poprawne *
+	test_10019(); // Potrzebne poprawne *
 	test_10020();
-	
-	
+  vector<int> a;
+  a.push_back(2);
+  a.push_back(3);
+  a.push_back(4);
+  vector <int> b(a.begin(), a.begin() + 1);
 }

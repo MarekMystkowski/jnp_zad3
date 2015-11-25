@@ -173,15 +173,18 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
       *this = result;
     else {
       VeryLongInt helperNumberDividing(x);
+      VeryLongInt helperNumberDivided(*this);
       for (uint32_t iterator = 0; iterator < lengthOfThis - lengthOfX; ++iterator)
         helperNumberDividing.data.push_back(0);
       uint32_t nrOfZerosAddedToHelper = lengthOfThis - lengthOfX;
       while (nrOfZerosAddedToHelper >= 0) {
-        while (*this > helperNumberDividing) {
-          *this -= helperNumberDividing;
+        while (helperNumberDividing < helperNumberDivided) {
+          helperNumberDivided -= helperNumberDividing;
+          cout << "ODJEMNA = " << helperNumberDivided << " ODEJEMNIK = " << helperNumberDividing << "\n";
           result += 1;
         }
         --nrOfZerosAddedToHelper;
+        helperNumberDividing.data.pop_back();
         if (result > 0) 
           result.data.push_back(0);
       }
