@@ -173,9 +173,14 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x) {
     else {
       VeryLongInt helperNumberDividing(x);
       VeryLongInt helperNumberDivided(*this);
-      for (uint32_t iterator = 0; iterator < lengthOfThis - lengthOfX; ++iterator)
-        helperNumberDividing <<= 32;
       int32_t nrOfZerosAddedToHelper = lengthOfThis - lengthOfX;
+      if (nrOfZerosAddedToHelper > 0) {
+        vector <uint32_t> zerosToInsert(nrOfZerosAddedToHelper, 0);
+        helperNumberDividing.data.insert(
+            helperNumberDividing.data.begin(),
+            zerosToInsert.begin(),
+            zerosToInsert.end());
+      }
       while (nrOfZerosAddedToHelper >= 0) {
         uint64_t base2Counter = 1;
         int32_t base2Index = 0;
@@ -196,9 +201,12 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x) {
           base2Index -= 1;
         }
         --nrOfZerosAddedToHelper;
-        helperNumberDividing >>= 32;
+        helperNumberDividing.data.erase(
+            helperNumberDividing.data.begin());
         if (result > 0 && nrOfZerosAddedToHelper >= 0) 
-          result <<= 32;
+          result.data.insert(
+              result.data.begin(),
+              0);
       }
       *this = result;
     }
@@ -337,24 +345,24 @@ bool operator>=(const VeryLongInt &a, const VeryLongInt &b) {
   return not (a < b);
 }
 
-ostream & operator<<(ostream & os, const VeryLongInt & x) {
+ostream & operator<<(ostream & outputStream, const VeryLongInt & x) {
   if (not x.isValid()) 
-    os << "NaN";
+    outputStream << "NaN";
   else if (x <= 9) 
-    os << x.data[0];
+    outputStream << x.data[0];
   else {
     VeryLongInt temp = x;
-    stack<int> sta;
+    stack<int> outputStack;
     while (temp > 0) {
-      sta.push((temp % 10).data[0]);
+      outputStack.push((temp % 10).data[0]);
       temp /= 10;
     }
-    while (not sta.empty()) {
-      os << sta.top();
-      sta.pop();
+    while (not outputStack.empty()) {
+      outputStream << outputStack.top();
+      outputStack.pop();
     }
   }
-  return os;
+  return outputStream;
 }
 
 VeryLongInt const &Zero() {
