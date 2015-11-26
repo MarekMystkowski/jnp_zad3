@@ -199,6 +199,13 @@ void test_7(){
 	assert( a == 1 << 20); 
 	
 }
+void test_8(){
+	VeryLongInt a, b;
+	a = 1;
+	a <<= 64;
+	cout << a << " a / 2 = " << a / 2 << endl;
+}
+
 // Proste testy na podstawowe operatory 2 argumentowe, 10x:
 void test_100(){
 	VeryLongInt x = 1;
@@ -505,8 +512,8 @@ void test_wypisywania(){
 
 int main(){
 	
-
-	
+	test_8();
+	/*
 	test_wypisywania();
 	
 	test_0();
