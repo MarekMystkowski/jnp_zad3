@@ -24,6 +24,30 @@ void test_0(){
 	assert(VeryLongInt(j) == 1);
 	size_t k = 1;
 	assert(VeryLongInt(k) == 1);
+	VeryLongInt ver = 1;
+	ver <<= a; 
+	ver <<= b;
+	ver <<= c;
+	ver <<= d;
+	ver <<= e;
+	ver <<= f;
+	ver <<= g;
+	ver <<= h;
+	ver <<= i;
+	ver <<= j;
+	ver <<= k; 
+	
+	ver >>= a; 
+	ver >>= b;
+	ver >>= c;
+	ver >>= d;
+	ver >>= e;
+	ver >>= f;
+	ver >>= g;
+	ver >>= h;
+	ver >>= i;
+	ver >>= j;
+	ver >>= k;        
 	// Nie kompilować:
 	//assert(VeryLongInt(true));      //                                OK
 	//assert(VeryLongInt('0'));       //                                OK
@@ -516,6 +540,10 @@ void test_wypisywania(){
 int main(){
 	
 	test_8();
+<<<<<<< HEAD
+=======
+	
+>>>>>>> f7ccbf4bc173afd48181b3f1c98524be7689d182
 	test_wypisywania();
 
   VeryLongInt a("20000000000");
