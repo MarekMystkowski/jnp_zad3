@@ -488,11 +488,14 @@ void test_10018(){
 void test_10019(){
 	const int N = 1000;
 	VeryLongInt x = 1;
-    for (int i = 2; i <= N; ++i)    
+    for (int i = 2; i <= N; ++i) {
+      cout << "BLE\n";
 		x *= i;
+    }
 
-	for (int i = 2; i <= N; ++i)
+	for (int i = 2; i <= N; ++i) {
 		x /= i;
+  }
 	
 	assert(x == 1);
 }
@@ -513,8 +516,11 @@ void test_wypisywania(){
 int main(){
 	
 	test_8();
-	/*
 	test_wypisywania();
+
+  VeryLongInt a("20000000000");
+  a = a * 2;
+  cout << "LOL" << a << "\n";
 	
 	test_0();
 	test_1();
@@ -550,7 +556,6 @@ int main(){
 	test_127();
 	test_128();
 	test_129();
-	
 	// Testy z treści zadania:
 	test_10000();
 	test_10001();
@@ -562,8 +567,9 @@ int main(){
 	test_10007();
 	test_10008();
 	test_10009();
+  cout << "TUTEJ.\n";	
 	test_10010();
-	//test_10011();
+	test_10011();
 	test_10012();
 	test_10013();
 	test_10014();
@@ -571,7 +577,9 @@ int main(){
 	test_10016();
 	test_10017();
 	test_10018();
-	//test_10019(); 
-	test_10020(); /**/
+  cout << "TUTEJ.\n";	
+	test_10019(); 
+  cout << "TUTEJ.\n";	
+	test_10020(); 
  
 }
