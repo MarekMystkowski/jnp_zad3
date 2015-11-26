@@ -233,7 +233,7 @@ VeryLongInt & VeryLongInt::operator<<=(unsigned int x){
 		for(uint32_t var : helperVector)
 			data[index++] = var;
 	}
-	temp = x - temp;
+	temp = x - temp * 32;
 	
     *this = *this * (1 << temp);
   }
@@ -248,7 +248,7 @@ VeryLongInt & VeryLongInt::operator>>=(unsigned int x){
 		for(size_t index= 0; index < temp ; index++)
 			data.pop_back();
 	}
-	temp = x - temp;
+	temp = x - temp * 32;
 	
     *this = *this / (1 << temp);
   }

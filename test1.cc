@@ -186,6 +186,19 @@ void test_6(){
 	
 }
 
+void test_7(){
+	VeryLongInt a, b;
+	a = 10000000000000000L;
+	b = 100000000000000L;
+	assert( a / b == 100);
+	a = 1;
+	a <<= 32;
+	assert(a == 1L <<32);
+	a *= 1L<<32;
+	a >>= 44;
+	assert( a == 1 << 20); 
+	
+}
 // Proste testy na podstawowe operatory 2 argumentowe, 10x:
 void test_100(){
 	VeryLongInt x = 1;
@@ -485,8 +498,8 @@ void test_10020(){
 void test_wypisywania(){
 	VeryLongInt a = 12345;
 	cout << a << " = 12345" << endl;
-	//VeryLongInt x(12345678901234L); 
-	//cout << x << " = 12345678901234" << endl;
+	VeryLongInt x(12345678901234L); 
+	cout << x << " = 12345678901234" << endl;
 }
 
 
@@ -503,6 +516,7 @@ int main(){
 	test_4();
 	test_5();
 	test_6();
+	test_7();	
 	
 	// Bardzo proste testy:
 	test_100();
@@ -551,6 +565,6 @@ int main(){
 	test_10017();
 	test_10018();
 	//test_10019(); 
-	test_10020();
+	test_10020(); /**/
  
 }
