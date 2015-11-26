@@ -64,27 +64,27 @@ void test_2(){
 	VeryLongInt a(13);
 	VeryLongInt b(4);
 
-  VeryLongInt c(1);
-  VeryLongInt d(4);
+	VeryLongInt c(1);
+	VeryLongInt d(4);
 
-  assert( c < d );
+	assert( c < d );
   
-  cout << ((a - b) - b) - b << "\n";
-  assert ( ((a - b) - b) - b == 1 );
-  assert ( ((a - b) - b) - b > 0 );
-  assert ( ((a - b) - b) - b < b );
+	cout << ((a - b) - b) - b << " == 1\n";
+	assert ( ((a - b) - b) - b == 1 );
+	assert ( ((a - b) - b) - b > 0 );
+	assert ( ((a - b) - b) - b < b );
   
-  VeryLongInt e(13);
-  VeryLongInt f(4);
+	VeryLongInt e(13);
+	VeryLongInt f(4);
 
-  e -= f;
-  assert( e == 9 );
-  e -= f;
-  assert( e == 5 );
-  e -= f;
-  assert( e == 1 );
+	e -= f;
+	assert( e == 9 );
+	e -= f;
+	assert( e == 5 );
+	e -= f;
+	assert( e == 1 );
 
-  assert( e < f );
+	assert( e < f );
 
 	assert( a + b == 17);
 	assert( a - b == 9);
@@ -109,6 +109,7 @@ void test_2(){
 	a /= b;
 	assert(a == 3);
 	a %= 2;
+
 	assert(a == 1);
 	a >>= 1;
 	assert(a == 0);
@@ -130,7 +131,7 @@ void test_3(){
 	assert( not a);
 	a -= 3;
 	assert( not a);
-	//a = true; // Ma się nie kompilować:                               KOMPILUJE SIĘ !!!!!!!!!
+	//a = true; // Ma się nie kompilować:                               OK
 }
 
 void test_4(){
@@ -389,7 +390,7 @@ void test_10007(){
 	else
 		assert(0);
 }
-/*
+
 void test_10008(){
 	VeryLongInt x = 1;
 	x <<= 1;
@@ -415,7 +416,7 @@ void test_10011(){
 		x *= 2;
 	assert(x % 3 == 1);
 }
-*/
+
 void test_10012(){
 	VeryLongInt x = Zero() ;
 	assert(x == 0);
@@ -482,23 +483,26 @@ void test_10020(){
 }
 
 void test_wypisywania(){
-	VeryLongInt a = 123456789;
-	cout << a << " = 123456789" << endl;
-	VeryLongInt x(12345678901234L); 
+	VeryLongInt a = 12345;
+	cout << a << " = 12345" << endl;
+	//VeryLongInt x(12345678901234L); 
 	//cout << x << " = 12345678901234" << endl;
 }
 
 
 int main(){
 	
-	//test_wypisywania();
+
+	
+	test_wypisywania();
+	
 	test_0();
 	test_1();
 	test_2();
 	test_3();
 	test_4();
 	test_5();
-	test_6(); // Mnożenie dalej nie działa :(
+	test_6();
 	
 	// Bardzo proste testy:
 	test_100();
@@ -535,23 +539,18 @@ int main(){
 	test_10005();
 	test_10006();
 	test_10007();
-	/*
 	test_10008();
 	test_10009();
 	test_10010();
-	test_10011();*/
+	//test_10011();
 	test_10012();
-	//test_10013();
+	test_10013();
 	test_10014();
 	test_10015();
 	test_10016();
-	test_10017(); // Potrzebne poprawne *
-	test_10018(); // Potrzebne poprawne *
-	test_10019(); // Potrzebne poprawne *
+	test_10017();
+	test_10018();
+	//test_10019(); 
 	test_10020();
-  vector<int> a;
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(4);
-  vector <int> b(a.begin(), a.begin() + 1);
+ 
 }

@@ -163,11 +163,12 @@ VeryLongInt & VeryLongInt::operator*= (const VeryLongInt &x) {
 }
 
 VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
+ // cout << data[0] << " / " << x.data[0] ;
   if(isNaN || x.isNaN || x == 0)
     isNaN = true;
   else {
-    uint32_t lengthOfX = x.data.size();
-    uint32_t lengthOfThis = data.size();
+    const uint32_t lengthOfX = x.data.size();
+    const uint32_t lengthOfThis = data.size();
     VeryLongInt result;
     if (lengthOfThis < lengthOfX) 
       *this = result;
@@ -176,7 +177,8 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
       VeryLongInt helperNumberDivided(*this);
       for (uint32_t iterator = 0; iterator < lengthOfThis - lengthOfX; ++iterator)
         helperNumberDividing.data.push_back(0);
-      uint32_t nrOfZerosAddedToHelper = lengthOfThis - lengthOfX;
+     
+      int32_t nrOfZerosAddedToHelper = lengthOfThis - lengthOfX;
       while (nrOfZerosAddedToHelper >= 0) {
         uint64_t base2Counter = 1;
         int32_t base2Index = 0;
@@ -204,25 +206,51 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
       *this = result;
     }
   }
+  correct_invariants();
+  //cout << " == " << data[0] << endl;
   return *this;
 }
 
 VeryLongInt & VeryLongInt::operator%=(const VeryLongInt &x){
-  VeryLongInt k = *this / x;
-  *this -= k * x;
+  if(isNaN || x.isNaN || x == 0){
+	  isNaN = true;
+  } else {
+	VeryLongInt k = (*this / x);
+	*this -= k * x;
+  }
   return *this;
 }
 VeryLongInt & VeryLongInt::operator<<=(unsigned int x){
   if(not isNaN){
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    this->data[0] <<= x;
+    size_t temp = x / 32;
+    if(temp > 0){
+		vector<uint32_t> helperVector = data;
+		size_t index = 0;
+		while(index < temp){
+			data.push_back(0);
+			data[index++] = 0;
+		}
+		for(uint32_t var : helperVector)
+			data[index++] = var;
+	}
+	temp = x - temp;
+	
+    *this = *this * (1 << temp);
   }
   return *this;
 }
 VeryLongInt & VeryLongInt::operator>>=(unsigned int x){
-  if(not isNaN){
-    // XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    data[0] >>= x;
+   if(not isNaN){
+    size_t temp = x / 32;
+    if(temp > 0){
+		for(size_t index= 0; index + temp  < data.size() ; index++)
+			data[index] = data[index + temp];
+		for(size_t index= 0; index < temp ; index++)
+			data.pop_back();
+	}
+	temp = x - temp;
+	
+    *this = *this / (1 << temp);
   }
   return *this;
 }
