@@ -11,6 +11,10 @@ void test_0(){
 	unsigned long g = 1;
 	unsigned long long h = 1L;
 	assert(VeryLongInt(a) == 1);
+	assert(VeryLongInt(1ULL) == 1);
+	assert(VeryLongInt(1UL) == 1);
+	assert(VeryLongInt(1LL) == 1);
+	assert(VeryLongInt(1U) == 1);
 	assert(VeryLongInt(b) == 1);
 	assert(VeryLongInt(c) == 1);
 	assert(VeryLongInt(d) == 1);
@@ -227,7 +231,7 @@ void test_8(){
 	VeryLongInt a, b;
 	a = 1;
 	a <<= 64;
-	cout << a << " a / 2 = " << a / 2 << endl;
+	cout << a << " / 2 = " << a / 2 << endl;
 }
 
 // Proste testy na podstawowe operatory 2 argumentowe, 10x:
@@ -532,6 +536,31 @@ void test_10020(){
 	assert(NaN().numberOfBinaryDigits() == 0);
 }
 
+void test_200(){
+	
+	VeryLongInt a("4545484498498554584512549849849184465592315879466114848794312158197973724518419879796734315118198797994613112515487979791112223334497846531277445774513245754479835614854978846461329774559849846");
+	VeryLongInt b("121212459999949454524548489844642444849891664648484989776885489797646545487979434343448877989986535345579879899");
+	assert(a + b == 
+		VeryLongInt("4545484498498554584512549849849184465592315879466114848794312158197973724518419879917946775118148252519161602360130424641003887982982836308162935572159791242459269958303856836447865120139729745")
+		);
+	assert( b + a == a + b);
+	assert(a * b == 
+		VeryLongInt("550969357954646353957909989532470222552703175037625207389639357479776013775041240813811148518858798585392408352938948150839849067703590011655696882854642367908906119224323305473838227260010292455759540333951935781058769632192176049392503116960336689023119071332600680706047968451745802049265368153645554")
+		);
+	assert(b * a == a * b);
+	assert(a / b == 
+		VeryLongInt("37500142299730985139931893469870855085222241132506829985590217560218270238880726424")
+		);
+	assert(b / a == 0);
+	assert(a % b == 
+		VeryLongInt("81497443140207043543330620739240219519680708432265694577773198146114239881890109775165870689833011982764098670")
+		);
+	assert(b % a == b
+		);
+}
+
+
+
 void test_wypisywania(){
 	VeryLongInt a = 12345;
 	cout << a << " = 12345" << endl;
@@ -542,13 +571,10 @@ void test_wypisywania(){
 
 int main(){
 	
-	//test_8();
+	
 
-	//test_wypisywania();
-/*
-  VeryLongInt a("20000000000");
-  a = a * 2;
-  cout << "LOL" << a << "\n";
+	test_wypisywania();
+
 	
 	test_0();
 	test_1();
@@ -558,6 +584,8 @@ int main(){
 	test_5();
 	test_6();
 	test_7();	
+	test_8();
+	
 	
 	// Bardzo proste testy:
 	test_100();
@@ -584,6 +612,11 @@ int main(){
 	test_127();
 	test_128();
 	test_129();
+	
+	
+	// Testy Poprawnościowe:
+	test_200();
+	
 	// Testy z treści zadania:
 	test_10000();
 	test_10001();
@@ -595,7 +628,7 @@ int main(){
 	test_10007();
 	test_10008();
 	test_10009();
-  cout << "TUTEJ.\n";	
+
 	test_10010();
 	test_10011();
 	test_10012();
@@ -605,9 +638,10 @@ int main(){
 	test_10016();
 	test_10017();
 	test_10018();
-  cout << "TUTEJ.\n";	*/
-	test_10019(); 
-  cout << "TUTEJ.\n";	
-	test_10020(); 
+	test_10020();
+    cout << "Przed testem z silnia." << endl;
+	//test_10019(); 
+    cout << "Test z silnia zakonczony.\n" << endl;	
+	 
  
 }

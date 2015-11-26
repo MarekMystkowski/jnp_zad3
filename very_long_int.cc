@@ -165,7 +165,6 @@ VeryLongInt & VeryLongInt::operator*= (const VeryLongInt &x) {
 }
 
 VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
- // cout << data[0] << " / " << x.data[0] ;
   if(isNaN || x.isNaN || x == 0)
     isNaN = true;
   else {
@@ -208,7 +207,6 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
     }
   }
   correct_invariants();
-  cout << "/= |== " << data[0] << endl;
   return *this;
 }
 
