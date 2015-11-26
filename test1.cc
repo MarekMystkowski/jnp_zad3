@@ -513,14 +513,17 @@ void test_10019(){
 	const int N = 1000;
 	VeryLongInt x = 1;
     for (int i = 2; i <= N; ++i) {
-      cout << "BLE\n";
+     
 		x *= i;
     }
 
 	for (int i = 2; i <= N; ++i) {
+		cout << "BLE" << endl;	
 		x /= i;
+		cout << "BLE2" << endl;
+		 
   }
-	
+
 	assert(x == 1);
 }
 
@@ -539,13 +542,10 @@ void test_wypisywania(){
 
 int main(){
 	
-	test_8();
-<<<<<<< HEAD
-=======
-	
->>>>>>> f7ccbf4bc173afd48181b3f1c98524be7689d182
-	test_wypisywania();
+	//test_8();
 
+	//test_wypisywania();
+/*
   VeryLongInt a("20000000000");
   a = a * 2;
   cout << "LOL" << a << "\n";
@@ -605,7 +605,7 @@ int main(){
 	test_10016();
 	test_10017();
 	test_10018();
-  cout << "TUTEJ.\n";	
+  cout << "TUTEJ.\n";	*/
 	test_10019(); 
   cout << "TUTEJ.\n";	
 	test_10020(); 

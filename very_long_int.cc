@@ -38,6 +38,7 @@ VeryLongInt::VeryLongInt(const string &x){
 	VeryLongInt currentResult;
 	for(char c : x){
 		currentResult = (currentResult * 10) + (int)(c - '0');
+		if( c < '0' || c > '9')currentResult.isNaN = true;
 	}
 	*this = currentResult;
 }
@@ -207,7 +208,7 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
     }
   }
   correct_invariants();
-  //cout << " == " << data[0] << endl;
+  cout << "/= |== " << data[0] << endl;
   return *this;
 }
 
