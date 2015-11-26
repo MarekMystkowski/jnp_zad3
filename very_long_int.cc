@@ -176,8 +176,7 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
       VeryLongInt helperNumberDividing(x);
       VeryLongInt helperNumberDivided(*this);
       for (uint32_t iterator = 0; iterator < lengthOfThis - lengthOfX; ++iterator)
-        helperNumberDividing.data.push_back(0);
-     
+        helperNumberDividing <<= 32;
       int32_t nrOfZerosAddedToHelper = lengthOfThis - lengthOfX;
       while (nrOfZerosAddedToHelper >= 0) {
         uint64_t base2Counter = 1;
@@ -185,8 +184,6 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
         vector <VeryLongInt> base2Vector;
         VeryLongInt temp;
         base2Vector.push_back(helperNumberDividing);
-        cout << "LEL = " << (base2Vector[base2Index] * 2).data.size() << "\n";
-        cout << "LEEL = " << (base2Vector[base2Index]).data.size() << "\n";
         while ((temp = base2Vector[base2Index] * 2) <= helperNumberDivided) {
           base2Counter *= 2;
           base2Index += 1;
@@ -201,9 +198,9 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
           base2Index -= 1;
         }
         --nrOfZerosAddedToHelper;
-        helperNumberDividing.data.pop_back();
-        if (result > 0) 
-          result.data.push_back(0);
+        helperNumberDividing >>= 32;
+        if (result > 0 && nrOfZerosAddedToHelper >= 0) 
+          result <<= 32;
       }
       *this = result;
     }
