@@ -20,12 +20,12 @@ static const uint64_t BASE = 1L << 32;
 VeryLongInt::VeryLongInt(const VeryLongInt &x) : isNaN(x.isNaN), data(x.data) {
 }
 
-VeryLongInt::VeryLongInt(int32_t x): isNaN(false) {
+VeryLongInt::VeryLongInt(uint32_t x): isNaN(false) {
 	data.clear();
 	data.push_back(x);
 }
 
-VeryLongInt::VeryLongInt(int64_t x): isNaN(false){
+VeryLongInt::VeryLongInt(uint64_t x): isNaN(false){
 	data.clear();
 	uint32_t tempNumber;
 	tempNumber = (uint32_t) (x % (1LL << 32));
@@ -67,6 +67,7 @@ size_t VeryLongInt::numberOfBinaryDigits()const{
 		tmp >>= 1;
 		result++;
 	}
+	cout << data.size() << endl;
 	return result;
 }
 VeryLongInt & VeryLongInt::operator=(const VeryLongInt &x){
@@ -222,9 +223,9 @@ VeryLongInt & VeryLongInt::operator%=(const VeryLongInt &x){
   }
   return *this;
 }
-VeryLongInt & VeryLongInt::operator<<=(unsigned int x){
+VeryLongInt & VeryLongInt::operator<<=(uint64_t x){
   if(not isNaN){
-    size_t temp = x / 32;
+    uint64_t temp = x / 32;
     if(temp > 0){
 		vector<uint32_t> helperVector = data;
 		size_t index = 0;
@@ -241,9 +242,9 @@ VeryLongInt & VeryLongInt::operator<<=(unsigned int x){
   }
   return *this;
 }
-VeryLongInt & VeryLongInt::operator>>=(unsigned int x){
+VeryLongInt & VeryLongInt::operator>>=(uint64_t x){
    if(not isNaN){
-    size_t temp = x / 32;
+    uint64_t temp = x / 32;
     if(temp > 0){
 		for(size_t index= 0; index + temp  < data.size() ; index++)
 			data[index] = data[index + temp];

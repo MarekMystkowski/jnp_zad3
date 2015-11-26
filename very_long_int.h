@@ -10,22 +10,25 @@ class VeryLongInt{
 		std::vector<uint32_t> data;
 		int date;
 		void correct_invariants();
-    void multiplyByDigitAndShift(VeryLongInt &, uint32_t, uint32_t) const;
+		void multiplyByDigitAndShift(VeryLongInt &, uint32_t, uint32_t) const;
+		
 	public:
 		VeryLongInt(const VeryLongInt &);
-		VeryLongInt(int32_t arg = 0);
-		VeryLongInt(int64_t);
-		VeryLongInt(unsigned x){
-			*this = VeryLongInt((int32_t) x);
+		VeryLongInt(uint32_t arg = 0U);
+		VeryLongInt(uint64_t);
+
+		VeryLongInt(int32_t x){
+			*this = VeryLongInt((uint32_t) x);
 			}
-		VeryLongInt(unsigned long x){
-			*this = VeryLongInt((int64_t) x);
+		VeryLongInt(int64_t x){
+			*this = VeryLongInt((uint64_t) x);
 			}
+
 		VeryLongInt(unsigned long long x){
-			*this = VeryLongInt((int64_t) x);
+			*this = VeryLongInt((uint64_t) x);
 			}
 		VeryLongInt(long long x){
-			*this = VeryLongInt((int64_t) x);
+			*this = VeryLongInt((uint64_t) x);
 			}
 		VeryLongInt(char) = delete;
 		VeryLongInt(char16_t) = delete;
@@ -35,7 +38,6 @@ class VeryLongInt{
 		explicit VeryLongInt(const std::string &);
 		explicit VeryLongInt(const char *);
 		
-	//	VeryLongInt(long long int);
 		explicit operator bool() const;
 		
 		
@@ -48,8 +50,49 @@ class VeryLongInt{
 		VeryLongInt &operator*=(const VeryLongInt &);
 		VeryLongInt &operator/=(const VeryLongInt &);
 		VeryLongInt &operator%=(const VeryLongInt &);
-		VeryLongInt &operator<<=(unsigned int);
-		VeryLongInt &operator>>=(unsigned int);
+		VeryLongInt &operator<<=(uint64_t);
+		VeryLongInt &operator<<=(uint32_t x){
+			*this <<= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator<<=(int32_t x){
+			*this <<= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator<<=(int64_t x){
+			*this <<= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator<<=(unsigned long long  x){
+			*this <<= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator<<=(long long x){
+			*this <<= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator>>=(uint64_t);
+		VeryLongInt &operator>>=(uint32_t x){
+			*this >>= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator>>=(int32_t x){
+			*this >>= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator>>=(int64_t x){
+			*this >>= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator>>=(unsigned long long  x){
+			*this >>= (uint64_t) x;
+			return *this;
+		}
+		VeryLongInt &operator>>=(long long x){
+			*this >>= (uint64_t) x;
+			return *this;
+		}
+		
 		friend std::ostream & operator<<(std::ostream &, const VeryLongInt &);
 		
 };

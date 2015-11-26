@@ -513,7 +513,7 @@ void test_wypisywania(){
 int main(){
 	
 	test_8();
-	/*
+	
 	test_wypisywania();
 	
 	test_0();
