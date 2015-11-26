@@ -185,6 +185,8 @@ VeryLongInt & VeryLongInt::operator/=(const VeryLongInt &x){
         vector <VeryLongInt> base2Vector;
         VeryLongInt temp;
         base2Vector.push_back(helperNumberDividing);
+        cout << "LEL = " << (base2Vector[base2Index] * 2).data.size() << "\n";
+        cout << "LEEL = " << (base2Vector[base2Index]).data.size() << "\n";
         while ((temp = base2Vector[base2Index] * 2) <= helperNumberDivided) {
           base2Counter *= 2;
           base2Index += 1;
